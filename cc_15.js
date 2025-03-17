@@ -37,3 +37,18 @@ function addRiskItem(riskName, riskLevel, department) {
 
     riskDashboard.appendChild(riskCard); // Adds the new risk item to the dashboard
 }
+
+ // Task 5: Implementing Bulk Updates
+ increaseRiskButton.addEventListener("click", () => {
+    document.querySelectorAll(".riskCard").forEach(card => {
+        let newRiskLevel = "High"; // Default to High
+
+        // Task 4: Categorizing Risks by Level
+        if (card.classList.contains("low")) newRiskLevel = "Medium";
+        else if (card.classList.contains("medium")) newRiskLevel = "High";
+
+        card.className = "riskCard " + newRiskLevel.toLowerCase(); // Updates risk level class
+        card.innerHTML = card.innerHTML.replace(/\(.*?\)/, `(${newRiskLevel})`); // Updates risk level text
+    });
+});
+});
