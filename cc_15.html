@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Management Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .riskCard {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .high { background-color: red; color: white; }
+        .medium { background-color: yellow; }
+        .low { background-color: green; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Risk Management Dashboard</h1>
+    
+    <form id="riskForm">
+        <input type="text" id="riskName" placeholder="Risk Name" required>
+        <select id="riskLevel">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+        <input type="text" id="department" placeholder="Department" required>
+        <button type="submit">Add Risk</button>
+    </form>
+    
+    <button id="increaseRiskLevels">Increase Risk Levels</button>
+    <div id="riskDashboard"></div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("Risk Dashboard Loaded");
+            const riskDashboard = document.getElementById("riskDashboard");
+            const riskForm = document.getElementById("riskForm");
+            const increaseRiskButton = document.getElementById("increaseRiskLevels");
+            
+            riskForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const riskName = document.getElementById("riskName").value;
+                const riskLevel = document.getElementById("riskLevel").value;
+                const department = document.getElementById("department").value;
+                addRiskItem(riskName, riskLevel, department);
+                riskForm.reset();
+            });
+            
+            function addRiskItem(riskName, riskLevel, department) {
+                const riskCard = document.createElement("div");
+                riskCard.classList.add("riskCard", riskLevel.toLowerCase());
+                riskCard.innerHTML = `
+                    <strong>${riskName}</strong> (${riskLevel})<br>
+                    Department: ${department}
+                    <button class="resolveBtn">Resolve</button>
+                `;
+                
+                riskCard.querySelector(".resolveBtn").addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    riskDashboard.removeChild(riskCard);
+                });
+                
+                riskDashboard.appendChild(riskCard);
+            }
+            
+            increaseRiskButton.addEventListener("click", () => {
+                document.querySelectorAll(".riskCard").forEach(card => {
+                    let newRiskLevel = "High";
+                    if (card.classList.contains("low")) newRiskLevel = "Medium";
+                    else if (card.classList.contains("medium")) newRiskLevel = "High";
+                    
+                    card.className = "riskCard " + newRiskLevel.toLowerCase();
+                    card.innerHTML = card.innerHTML.replace(/\(.*?\)/, `(${newRiskLevel})`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
