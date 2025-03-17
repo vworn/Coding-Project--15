@@ -37,50 +37,6 @@
     <button id="increaseRiskLevels">Increase Risk Levels</button>
     <div id="riskDashboard"></div>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            console.log("Risk Dashboard Loaded");
-            const riskDashboard = document.getElementById("riskDashboard");
-            const riskForm = document.getElementById("riskForm");
-            const increaseRiskButton = document.getElementById("increaseRiskLevels");
-            
-            riskForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-                const riskName = document.getElementById("riskName").value;
-                const riskLevel = document.getElementById("riskLevel").value;
-                const department = document.getElementById("department").value;
-                addRiskItem(riskName, riskLevel, department);
-                riskForm.reset();
-            });
-            
-            function addRiskItem(riskName, riskLevel, department) {
-                const riskCard = document.createElement("div");
-                riskCard.classList.add("riskCard", riskLevel.toLowerCase());
-                riskCard.innerHTML = `
-                    <strong>${riskName}</strong> (${riskLevel})<br>
-                    Department: ${department}
-                    <button class="resolveBtn">Resolve</button>
-                `;
-                
-                riskCard.querySelector(".resolveBtn").addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    riskDashboard.removeChild(riskCard);
-                });
-                
-                riskDashboard.appendChild(riskCard);
-            }
-            
-            increaseRiskButton.addEventListener("click", () => {
-                document.querySelectorAll(".riskCard").forEach(card => {
-                    let newRiskLevel = "High";
-                    if (card.classList.contains("low")) newRiskLevel = "Medium";
-                    else if (card.classList.contains("medium")) newRiskLevel = "High";
-                    
-                    card.className = "riskCard " + newRiskLevel.toLowerCase();
-                    card.innerHTML = card.innerHTML.replace(/\(.*?\)/, `(${newRiskLevel})`);
-                });
-            });
-        });
-    </script>
+    <script src="cc_15.js"></script>
 </body>
 </html>
