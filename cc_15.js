@@ -3,9 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Risk Dashboard Loaded"); // Prints message to console when page loads
 
     // Selecting elements from the HTML
-    const riskDashboard = document.getElementById("riskDashboard");
+    // const riskDashboard = document.getElementById("riskDashboard"); // Duplicate declaration removed
     const riskForm = document.getElementById("riskForm");
     const increaseRiskButton = document.getElementById("increaseRiskLevels");
+    const riskDashboard = document.getElementById("riskDashboard");
 
 // Task 2: Adding Risk Items Dynamically
 riskForm.addEventListener("submit", (e) => {
@@ -49,6 +50,12 @@ function addRiskItem(riskName, riskLevel, department) {
 
         card.className = "riskCard " + newRiskLevel.toLowerCase(); // Updates risk level class
         card.innerHTML = card.innerHTML.replace(/\(.*?\)/, `(${newRiskLevel})`); // Updates risk level text
+
+        // Reattach resolve button event listener
+        card.querySelector(".resolveBtn").addEventListener("click", (e) => {
+            e.stopPropagation(); // Prevents event bubbling
+            riskDashboard.removeChild(card); // Removes the risk card when resolved
+        });
     });
 });
 });
