@@ -28,3 +28,12 @@ function addRiskItem(riskName, riskLevel, department) {
         Department: ${department}
         <button class="resolveBtn">Resolve</button>
     `;
+
+    // Task 3: Removing Risk Items
+    riskCard.querySelector(".resolveBtn").addEventListener("click", (e) => {
+        e.stopPropagation(); // Task 6: Prevents event bubbling
+        riskDashboard.removeChild(riskCard); // Removes the risk card when resolved
+    });
+
+    riskDashboard.appendChild(riskCard); // Adds the new risk item to the dashboard
+}
